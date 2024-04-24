@@ -8,7 +8,7 @@ Extensions(Intel TDX)](https://www.intel.com/content/www/us/en/developer/article
 
 ## Architecture
 
-![](../attestation/full-disk-encryption/docs/fde-arch.png)
+![](./docs/fde-arch.png)
   
 ## Preparation
 
