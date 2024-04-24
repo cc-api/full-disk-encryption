@@ -14,7 +14,7 @@ Extensions(Intel TDX)](https://www.intel.com/content/www/us/en/developer/article
 
 We build the Ubuntu 22.04 guest image on the Ubuntu 22.04 host, and validate it. If you work in other environment, please adapt scripts in the below sections carefully (not recommended).
 
-**Note: The default FDE solution is just a reference implementation. Both fde-agent and fde-image.sh depend on an available KBS (Key Broker Service). Otherwise they cannot work. Please modify fde-agent code to add KBS information before running the solution. The detail can be found in `attestation/full-disk-encryption`.**
+**Note: The default FDE solution is just a reference implementation. Both fde-agent and fde-image.sh depend on an available KBS (Key Broker Service). Otherwise they cannot work. Please modify fde-agent code to add KBS information before running the solution. The detail can be found in [retreive_key_from_kbs](https://github.com/cc-api/full-disk-encryption/blob/3c4325c7a6b4d2fe76aa0b873920bf981c46db41/src/key_broker.rs#L20).**
 
 ### 1. Register a key 
 
