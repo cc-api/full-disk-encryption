@@ -3,26 +3,26 @@
 Full disk encryption (FDE) is a security method for protecting sensitive
 data by encrypting all data on a disk partition. FDE shall encrypt data
 automatically to prevent unauthorized access.
-This project is a FDE solution based on [Intel&reg; Trust Domain 
+This project is a FDE solution based on [Intel&reg; Trust Domain
 Extensions(Intel TDX)](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-trust-domain-extensions.html).
 
 ## Architecture
 
 ![](./docs/fde-arch.png)
-  
+
 ## Preparation
 
 We build the Ubuntu 22.04 guest image on the Ubuntu 22.04 host, and validate it. If you work in other environment, please adapt scripts in the below sections carefully (not recommended).
 
 **Note: The default FDE solution is just a reference implementation. Both fde-agent and fde-image.sh depend on an available KBS (Key Broker Service). Otherwise they cannot work. Please modify fde-agent code to add KBS information before running the solution. The detail can be found in [retreive_key_from_kbs](https://github.com/cc-api/full-disk-encryption/blob/3c4325c7a6b4d2fe76aa0b873920bf981c46db41/src/key_broker.rs#L20).**
 
-### 1. Register a key 
+### 1. Register a key
 
 The `key` to encrypt the image disk is distributed by the KBS, besides, which will bind a unique `keyid` with the `key`. The `keyid` is the key's identifier in the KBS. Consult your KBS to get a pair of key and key_id.
 
 ### 2. Build the fde-agent
 
-The fde-agent is placed in the `FDE_DIR=attestaion/full-disk-encryption`. 
+The fde-agent is placed in the `FDE_DIR=attestaion/full-disk-encryption`.
 
 The fde-agent is responsible for decrypting a guest image and mounting it as the rootfs. The fde-agent depends on dynamic libraries `libtdx-attest` and `libtdx-attest-dev` in `DCAP`. The `DCAP` can be downloaded from [official website](https://download.01.org/intel-sgx/sgx-dcap/). Please get the correct version of DCAP and install the libraries. Then build the fde-agent by the following commands.
 
@@ -40,11 +40,11 @@ cd ${FDE_DIR}/attestation/full-disk-enryption/tools/image
 ./fde-image.sh -k $KEY -i $KEY_ID -d ${TDX_REPO_LOCAL}
 ```
 
-The `KEY=key` and `KEY_ID=keyid` are retrieved in step 1. The `TDX_REPO_LOCAL` is built from `tdx-tools`. 
+The `KEY=key` and `KEY_ID=keyid` are retrieved in step 1. The `TDX_REPO_LOCAL` is built from `tdx-tools`.
 
 ### 4. Enroll variables to OVMF
 
-Install ovmfkeyenroll tool.
+Install [ovmfkeyenroll](/tools/ovmfkeyenroll/) tool.
 
 ```
 pip3 install ovmfkeyenroll
@@ -88,13 +88,13 @@ It is recommended to use a json structure to save the userdata, at least includi
 }
 ```
 
-### TDX tools 
+### TDX tools
 
-The script `start-qemu.sh` helps launch a TDX guest from an encrypted guest image built through above steps. 
+The script `start-qemu.sh` helps launch a TDX guest from an encrypted guest image built through above steps.
 
 ## Validation
 
-Launch a tdvm guest by the following command. 
+Launch a tdvm guest by the following command.
 
 ```
 OVMF_PATH=/path/to/OVMF
